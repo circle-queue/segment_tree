@@ -30,8 +30,9 @@ class SegmentTree:
         if isinstance(query, int):
             return self.A[self.size + query]
 
-        lo = (query.start or 0) + self.size
-        hi = (query.stop or self.size) + self.size -1 # exclusive
+        lo = (0 if query.start is None else query.start) + self.size
+        hi = (self.size if query.stop is None else query.stop) + self.size - 1
+
         LEFT_CHILD = 0
         RIGHT_CHILD = 1
 
