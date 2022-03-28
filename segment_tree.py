@@ -1,6 +1,3 @@
-from operator import add
-from typing import Union
-
 class SegmentTree:
     '''
     Example use:
@@ -8,6 +5,7 @@ class SegmentTree:
         t[0] -= 3 # O(log(n))
         t[3] = 11 # O(log(n))
         assert t[:4] == 18 # prints the sum of the first 4 elements O(log(n))
+        t[3:5] -= 3 # O(log(n)) # Updates 3 and 4
     '''
     def __init__(self, array, operator=add):
         self.op = operator
@@ -30,7 +28,7 @@ class SegmentTree:
         if isinstance(query, int):
             return self.A[self.size + query]
 
-        lo = (0 if query.start is None else query.start) + self.size
+        lo = (query.start or 0) + self.size
         hi = (self.size if query.stop is None else query.stop) + self.size - 1
 
         LEFT_CHILD = 0
@@ -49,10 +47,20 @@ class SegmentTree:
             hi >>= 1
         return total
 
-    def __setitem__(self, i, value):
+    def __setitem__(self, i: Union[slice, int], value):
         i += self.size
         self.A[i] = value
         i >>= 1
         while i:
             self.update(i)
             i >>= 1
+
+    def __str__(self):
+        lo = 1
+        hi = 2
+        layers = []
+        while hi <= len(self.A):
+            layers.append(self.A[lo:hi])
+            lo <<= 1
+            hi <<= 1
+        return '\n'.join(map(str, layers))
