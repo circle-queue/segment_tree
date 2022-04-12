@@ -1,3 +1,6 @@
+from typing import Union
+from operator import add
+
 class SegmentTree:
     '''
     Example use:
@@ -38,10 +41,10 @@ class SegmentTree:
         A = self.A
         while lo <= hi:
             if lo % 2 == RIGHT_CHILD:
-                total += A[lo]
+                total = self.op(total, A[lo])
                 lo += 1
             if hi % 2 == LEFT_CHILD:
-                total += A[hi]
+                total = self.op(total, A[hi])
                 hi -= 1
             lo >>= 1
             hi >>= 1
