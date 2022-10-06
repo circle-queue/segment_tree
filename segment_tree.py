@@ -4,11 +4,11 @@ from operator import add
 class SegmentTree:
     '''
     Example use:
-        t = SegmentTree([6, 3, -1, 1, 3], operator=sum) # O(n)
+        t = SegmentTree([6, 3, -1, 1, 3], operator=add) # O(n)
         t[0] -= 3 # O(log(n))
         t[3] = 11 # O(log(n))
-        assert t[:4] == 18 # prints the sum of the first 4 elements O(log(n))
-        t[3:5] -= 3 # O(log(n)) # Updates 3 and 4
+        assert t[:4] == 16 # prints the sum of the first 4 elements O(log(n))
+        BROKEN: t[3:5] -= 3 # O(log(n)) # Updates 3 and 4
     '''
     def __init__(self, array, operator=add):
         self.op = operator
